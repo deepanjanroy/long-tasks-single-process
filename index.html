@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Page Title</title>
+<html>
+    <head>
+    </head>
+    <body>
+        <div><a href="/">Open new tab</a></div>
+        <div><a id="longTaskRunner" href="#">Run Long Task </a></div>
+        <div><ul id="longTaskList"></ul></div>
+        <script>
+         function runLongTask() {
+             console.log(performance.now());
+             for (let i = 0; i < 2e3; i++) {
+                 console.log('foo');
+             }
+             console.log(performance.now());
+         }
+
+         function appendLongTaskInfo(entry) {
+             const longTaskList = document.querySelector('#longTaskList');
+             const li = document.createElement('li');
+             li.innerText = `Long task detected with duration ${entry.duration} ms`;
+             longTaskList.append(li);
+         }
+         const observer = new PerformanceObserver((list) => {
+             for (const entry of list.getEntries()) {
+                 console.log(entry);
+                 appendLongTaskInfo(entry);
+             }
+         });
+
+         observer.observe({entryTypes: ['longtask']});
+
+         document.querySelector('#longTaskRunner').addEventListener('click', runLongTask);
+        </script>
+
+    </body>
+</html>
