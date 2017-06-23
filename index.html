@@ -5,13 +5,12 @@
     <head>
     </head>
     <body>
-        <div><a href="/">Open new tab</a></div>
         <div><a id="longTaskRunner" href="#">Run Long Task </a></div>
         <div><ul id="longTaskList"></ul></div>
         <script>
          function runLongTask() {
              console.log(performance.now());
-             for (let i = 0; i < 2e3; i++) {
+             for (let i = 0; i < 1e4; i++) {
                  console.log('foo');
              }
              console.log(performance.now());
